@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WardReady — Clinical Practice Bridging Program</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --teal: #1D9E75;
+    --teal-light: #E1F5EE;
+    --teal-dark: #0F6E56;
+    --teal-darker: #085041;
+    --red-light: #FCEBEB;
+    --red-mid: #A32D2D;
+    --amber-light: #FAEEDA;
+    --amber-mid: #854F0B;
+    --gray-bg: #F7F7F5;
+    --border: #E5E4DF;
+    --text-primary: #1A1A18;
+    --text-secondary: #5F5E5A;
+    --text-tertiary: #888780;
+    --radius-sm: 6px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+  }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: var(--text-primary); background: #fff; }
+
+  /* NAV */
+  .wr-nav { display: flex; justify-content: space-between; align-items: center; padding: 1.25rem 2rem; border-bottom: 1px solid var(--border); }
+  .wr-logo { font-size: 18px; font-weight: 600; color: var(--text-primary); text-decoration: none; }
+  .wr-logo span { color: var(--teal); }
+  .wr-nav-cta { background: var(--teal); color: #fff; border: none; padding: 9px 20px; border-radius: var(--radius-md); font-size: 13px; font-weight: 500; cursor: pointer; text-decoration: none; }
+  .wr-nav-cta:hover { background: var(--teal-dark); }
+
+  /* HERO */
+  .wr-hero { padding: 4rem 2rem 3rem; max-width: 720px; margin: 0 auto; text-align: center; }
+  .wr-badge { display: inline-block; background: var(--teal-light); color: var(--teal-dark); font-size: 12px; font-weight: 500; padding: 4px 14px; border-radius: var(--radius-md); margin-bottom: 1.25rem; }
+  .wr-hero h1 { font-size: 34px; font-weight: 600; line-height: 1.25; color: var(--text-primary); margin-bottom: 1rem; }
+  .wr-hero p { font-size: 16px; color: var(--text-secondary); line-height: 1.75; max-width: 580px; margin: 0 auto 2rem; }
+  .wr-hero-ctas { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .wr-btn-primary { background: var(--teal); color: #fff; border: none; padding: 12px 26px; border-radius: var(--radius-md); font-size: 14px; font-weight: 500; cursor: pointer; text-decoration: none; }
+  .wr-btn-primary:hover { background: var(--teal-dark); }
+  .wr-btn-secondary { background: transparent; color: var(--text-primary); border: 1px solid var(--border); padding: 12px 26px; border-radius: var(--radius-md); font-size: 14px; cursor: pointer; text-decoration: none; }
+  .wr-btn-secondary:hover { background: var(--gray-bg); }
+
+  /* STATS */
+  .wr-stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; margin: 0 2rem 2rem; }
+  .wr-stat { background: #fff; padding: 1.5rem 1rem; text-align: center; }
+  .wr-stat-num { font-size: 28px; font-weight: 600; color: var(--teal); display: block; }
+  .wr-stat-label { font-size: 12px; color: var(--text-secondary); margin-top: 6px; line-height: 1.5; }
+
+  /* DIVIDER */
+  .wr-divider { height: 1px; background: var(--border); margin: 0 2rem; }
+
+  /* SECTIONS */
+  .wr-section { padding: 3rem 2rem; max-width: 800px; margin: 0 auto; }
+  .wr-section-label { font-size: 11px; font-weight: 600; color: var(--teal); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.75rem; }
+  .wr-section h2 { font-size: 24px; font-weight: 600; color: var(--text-primary); margin-bottom: 0.75rem; }
+  .wr-section > p { font-size: 15px; color: var(--text-secondary); line-height: 1.75; }
+
+  /* PROBLEM GRID */
+  .wr-problem-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 1.5rem; }
+  .wr-problem-card { background: var(--gray-bg); border-radius: var(--radius-md); padding: 1.25rem; }
+  .wr-crit-badge { display: inline-block; background: var(--red-light); color: var(--red-mid); font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: var(--radius-sm); margin-bottom: 10px; }
+  .wr-high-badge { display: inline-block; background: var(--amber-light); color: var(--amber-mid); font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: var(--radius-sm); margin-bottom: 10px; }
+  .wr-problem-card .pct { font-size: 30px; font-weight: 600; color: #E24B4A; }
+  .wr-problem-card .skill { font-size: 13px; color: var(--text-secondary); margin-top: 4px; line-height: 1.55; }
+
+  /* MODULE GRID */
+  .wr-module-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 1.5rem; }
+  .wr-module-card { background: #fff; border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.25rem; }
+  .wr-module-card h3 { font-size: 14px; font-weight: 600; color: var(--text-primary); margin: 8px 0 6px; }
+  .wr-module-card p { font-size: 13px; color: var(--text-secondary); line-height: 1.65; }
+
+  /* TIMELINE */
+  .wr-timeline { margin-top: 1.5rem; }
+  .wr-tl-item { display: grid; grid-template-columns: 90px 1fr; gap: 16px; padding: 1rem 0; border-bottom: 1px solid var(--border); }
+  .wr-tl-item:last-child { border-bottom: none; }
+  .wr-tl-week { font-size: 12px; color: var(--text-tertiary); font-weight: 500; padding-top: 2px; }
+  .wr-tl-content h4 { font-size: 14px; font-weight: 600; color: var(--text-primary); margin-bottom: 3px; }
+  .wr-tl-content p { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
+  .wr-gate { background: var(--teal-light); border-radius: var(--radius-md); padding: 1rem; margin: 4px 0; }
+  .wr-gate .wr-tl-week { color: var(--teal-dark); }
+  .wr-gate .wr-tl-content h4 { color: var(--teal-darker); }
+  .wr-gate .wr-tl-content p { color: var(--teal-dark); }
+
+  /* OUTPUT GRID */
+  .wr-output-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 1.5rem; }
+  .wr-output-card { background: #fff; border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.25rem; }
+  .wr-output-icon { width: 34px; height: 34px; background: var(--teal-light); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; margin-bottom: 12px; }
+  .wr-output-card h3 { font-size: 14px; font-weight: 600; color: var(--text-primary); margin-bottom: 5px; }
+  .wr-output-card p { font-size: 13px; color: var(--text-secondary); line-height: 1.65; }
+
+  /* PILOT SECTION */
+  .wr-pilot { background: var(--gray-bg); padding: 3rem 2rem; margin-top: 1rem; }
+  .wr-pilot-inner { max-width: 620px; margin: 0 auto; }
+  .wr-pilot-inner h2 { font-size: 24px; font-weight: 600; margin-bottom: 0.5rem; }
+  .wr-pilot-inner > p { font-size: 15px; color: var(--text-secondary); margin-bottom: 1.75rem; line-height: 1.75; }
+  .wr-tally-embed { width: 100%; min-height: 500px; border: none; }
+
+  /* ACCREDITATION STRIP */
+  .wr-accred { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; padding: 1.5rem 2rem; border-top: 1px solid var(--border); }
+  .wr-accred-badge { font-size: 12px; color: var(--text-secondary); border: 1px solid var(--border); padding: 5px 12px; border-radius: var(--radius-md); background: #fff; }
+
+  /* FOOTER */
+  .wr-footer { padding: 1.5rem 2rem; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
+  .wr-footer-left { font-size: 13px; color: var(--text-tertiary); }
+  .wr-footer-right { font-size: 13px; color: var(--text-tertiary); }
+
+  /* RESPONSIVE */
+  @media (max-width: 640px) {
+    .wr-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .wr-problem-grid { grid-template-columns: 1fr; }
+    .wr-module-grid { grid-template-columns: 1fr; }
+    .wr-output-grid { grid-template-columns: 1fr; }
+    .wr-hero h1 { font-size: 26px; }
+    .wr-nav { padding: 1rem; }
+    .wr-section { padding: 2rem 1rem; }
+    .wr-divider { margin: 0 1rem; }
+    .wr-stats { margin: 0 1rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="wr-nav">
+  <a href="#" class="wr-logo">Ward<span>Ready</span></a>
+  <a href="#pilot" class="wr-nav-cta">Request a pilot conversation</a>
+</nav>
+
+<!-- HERO -->
+<div class="wr-hero">
+  <div class="wr-badge">Clinical practice bridging — Indian private hospitals</div>
+  <h1>GNP-registered nurses, ready for independent ward practice in 13 weeks</h1>
+  <p>WardReady closes the documented gap between nursing qualification and clinical competency. Structured, simulation-based, and deployable by your training department with no additional curriculum development required.</p>
+  <div class="wr-hero-ctas">
+    <a href="#pilot" class="wr-btn-primary">Request a pilot conversation</a>
+    <a href="#program" class="wr-btn-secondary">See the program</a>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="wr-stats">
+  <div class="wr-stat">
+    <span class="wr-stat-num">&lt;5%</span>
+    <div class="wr-stat-label">of GNP graduates independently competent in BLS/CPR at qualification</div>
+  </div>
+  <div class="wr-stat">
+    <span class="wr-stat-num">&gt;50%</span>
+    <div class="wr-stat-label">unable to independently perform IV cannulation or urinary catheterisation</div>
+  </div>
+  <div class="wr-stat">
+    <span class="wr-stat-num">15</span>
+    <div class="wr-stat-label">modules covering all critical and high-risk procedural skill gaps</div>
+  </div>
+  <div class="wr-stat">
+    <span class="wr-stat-num">40–50</span>
+    <div class="wr-stat-label">INC CNE credit hours per participant on program completion</div>
+  </div>
+</div>
+
+<div class="wr-divider"></div>
+
+<!-- PROBLEM -->
+<div class="wr-section" id="problem">
+  <div class="wr-section-label">The problem</div>
+  <h2>INC registration does not equal procedural competency</h2>
+  <p>Research across Uttarakhand and North India hospital cohorts shows GNP-qualified nurses entering private hospital wards with near-zero independent procedural confidence in high-risk skills. The registration examination does not assess practical competency at the level required for unsupervised patient contact.</p>
+  <div class="wr-problem-grid">
+    <div class="wr-problem-card">
+      <div class="wr-crit-badge">Critical</div>
+      <div class="pct">&lt;5%</div>
+      <div class="skill">BLS/CPR, neonatal resuscitation, defibrillator/AED operation</div>
+    </div>
+    <div class="wr-problem-card">
+      <div class="wr-high-badge">High gap</div>
+      <div class="pct">&gt;50%</div>
+      <div class="skill">IV cannulation, urinary catheterisation, NG tube insertion and feeding</div>
+    </div>
+    <div class="wr-problem-card">
+      <div class="wr-high-badge">High gap</div>
+      <div class="pct">&gt;50%</div>
+      <div class="skill">Wound dressing, medication administration, ECG recording, perioperative care</div>
+    </div>
+  </div>
+</div>
+
+<div class="wr-divider"></div>
+
+<!-- PROGRAM -->
+<div class="wr-section" id="program">
+  <div class="wr-section-label">The program</div>
+  <h2>A complete, deployable training architecture</h2>
+  <p>13 weeks. 39 in-person sessions at 3 per week, 2 hours each. Blended delivery combining simulation, scenario-based practice, and structured self-directed learning. Your training department runs it. No additional curriculum development required.</p>
+  <div class="wr-module-grid">
+    <div class="wr-module-card">
+      <div class="wr-crit-badge">Critical modules</div>
+      <h3>M3 BLS/CPR — M4 Defibrillator/AED — M5 Neonatal resuscitation</h3>
+      <p>100% pass on critical steps. Minimum 3 supervised attempts. Mandatory remediation before any patient contact on failure. Gate 1 hard stop at end of Week 4.</p>
+    </div>
+    <div class="wr-module-card">
+      <div class="wr-high-badge">High skill modules</div>
+      <h3>M6–M14: Airway, Medication, IV cannulation, Phlebotomy, ECG, Catheterisation, NG tube, Wound care, Perioperative</h3>
+      <p>80% pass threshold, zero critical errors permitted. Minimum 2 supervised attempts. Three gate assessments across the program.</p>
+    </div>
+    <div class="wr-module-card">
+      <div style="display:inline-block;background:#E1F5EE;color:#085041;font-size:11px;font-weight:600;padding:3px 10px;border-radius:6px;margin-bottom:10px;">Foundations</div>
+      <h3>M1 Infection control and patient ID — M2 Clinical communication and documentation</h3>
+      <p>Prerequisites for all procedural modules. Bilingual Hindi/English SDL workbooks for North India cohorts. 3–4 week production lead time required before program start.</p>
+    </div>
+    <div class="wr-module-card">
+      <div style="display:inline-block;background:#E1F5EE;color:#085041;font-size:11px;font-weight:600;padding:3px 10px;border-radius:6px;margin-bottom:10px;">Final assessment</div>
+      <h3>M15 Integrated OSCE</h3>
+      <p>4–6 station circuit covering all critical skills, sampled high skills, and SBAR handover. Three-signature Competency Passport sign-off within 5 working days. No partial passes issued.</p>
+    </div>
+  </div>
+</div>
+
+<div class="wr-divider"></div>
+
+<!-- TIMELINE -->
+<div class="wr-section" id="timeline">
+  <div class="wr-section-label">13-week timeline</div>
+  <h2>Four assessment gates. No nurse proceeds without passing.</h2>
+  <div class="wr-timeline">
+    <div class="wr-tl-item">
+      <div class="wr-tl-week">Weeks 1–2</div>
+      <div class="wr-tl-content"><h4>Foundations and communication</h4><p>M1: Infection control, hand hygiene, PPE, patient identification. M2: SBAR, clinical documentation, bilingual SDL workbook for North India cohorts.</p></div>
+    </div>
+    <div class="wr-tl-item">
+      <div class="wr-tl-week">Weeks 3–4</div>
+      <div class="wr-tl-content"><h4>Critical skills block</h4><p>M3 BLS/CPR, M4 Defibrillator/AED, M5 Neonatal resuscitation. Adult and neonatal manikin simulation. Minimum 3 supervised attempts per skill.</p></div>
+    </div>
+    <div class="wr-tl-item wr-gate">
+      <div class="wr-tl-week" style="color:var(--teal-dark);font-weight:600;">Gate 1</div>
+      <div class="wr-tl-content"><h4>End of Week 4 — Critical skills</h4><p>Hard stop. No ward contact in any critical skill area until passed. Mandatory remediation on failure regardless of cohort timeline.</p></div>
+    </div>
+    <div class="wr-tl-item">
+      <div class="wr-tl-week">Weeks 5–8</div>
+      <div class="wr-tl-content"><h4>Foundation high skills</h4><p>M6 Airway and O2 therapy, M7 Medication administration, M8 IV cannulation, M9 Phlebotomy, M10 ECG recording. Supervised bedside practice for M8 and M9 where ward access is confirmed.</p></div>
+    </div>
+    <div class="wr-tl-item wr-gate">
+      <div class="wr-tl-week" style="color:var(--teal-dark);font-weight:600;">Gate 2</div>
+      <div class="wr-tl-content"><h4>End of Week 8 — Foundation high skills</h4><p>Written and practical assessments for M6–M10. Targeted remediation on failed steps only.</p></div>
+    </div>
+    <div class="wr-tl-item">
+      <div class="wr-tl-week">Weeks 9–11</div>
+      <div class="wr-tl-content"><h4>Procedural high skills</h4><p>M11 Urinary catheterisation (male and female), M12 NG tube insertion and enteral feeding, M13 Wound dressing and pressure injury management.</p></div>
+    </div>
+    <div class="wr-tl-item wr-gate">
+      <div class="wr-tl-week" style="color:var(--teal-dark);font-weight:600;">Gate 3</div>
+      <div class="wr-tl-content"><h4>End of Week 11 — Procedural high skills</h4><p>Written and practical assessments for M11–M13. Full module repeat required on second failed reassessment.</p></div>
+    </div>
+    <div class="wr-tl-item">
+      <div class="wr-tl-week">Week 12</div>
+      <div class="wr-tl-content"><h4>Perioperative nursing care</h4><p>M14: Pre-op, intra-op, post-op/PACU. WHO Surgical Safety Checklist SDL workbook. Scenario-based simulation reflecting deploying hospital OT workflow.</p></div>
+    </div>
+    <div class="wr-tl-item wr-gate">
+      <div class="wr-tl-week" style="color:var(--teal-dark);font-weight:600;">Gate 4 / Week 13</div>
+      <div class="wr-tl-content"><h4>Integrated OSCE and Competency Passport sign-off</h4><p>M15: 4–6 station OSCE circuit. Three-signature Competency Passport issued within 5 working days of final session.</p></div>
+    </div>
+  </div>
+</div>
+
+<div class="wr-divider"></div>
+
+<!-- OUTPUTS -->
+<div class="wr-section" id="outputs">
+  <div class="wr-section-label">What the hospital gets</div>
+  <h2>Outputs built for hospital operations and compliance</h2>
+  <div class="wr-output-grid">
+    <div class="wr-output-card">
+      <div class="wr-output-icon">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="1" width="12" height="14" rx="2" stroke="#1D9E75" stroke-width="1.3"/><line x1="5" y1="5" x2="11" y2="5" stroke="#1D9E75" stroke-width="1.3"/><line x1="5" y1="8" x2="11" y2="8" stroke="#1D9E75" stroke-width="1.3"/><line x1="5" y1="11" x2="9" y2="11" stroke="#1D9E75" stroke-width="1.3"/></svg>
+      </div>
+      <h3>Competency Passport per nurse</h3>
+      <p>Module-by-module pass record with written scores, practical scores, supervised attempt counts, and three assessor signatures. Issued at program completion, not provisionally.</p>
+    </div>
+    <div class="wr-output-card">
+      <div class="wr-output-icon">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="#1D9E75" stroke-width="1.3"/><path d="M5 8l2 2 4-4" stroke="#1D9E75" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <h3>INC CNE credit hours</h3>
+      <p>40–50 INC Continuing Nursing Education hours per participant. Maps to the correct regulatory framework for INC-registered nurses. Not NSDC/HSSC, which is designed for pre-service vocational skilling.</p>
+    </div>
+    <div class="wr-output-card">
+      <div class="wr-output-icon">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="1" y="3" width="14" height="10" rx="2" stroke="#1D9E75" stroke-width="1.3"/><line x1="1" y1="7" x2="15" y2="7" stroke="#1D9E75" stroke-width="1.3"/><line x1="5" y1="3" x2="5" y2="2" stroke="#1D9E75" stroke-width="1.3" stroke-linecap="round"/><line x1="11" y1="3" x2="11" y2="2" stroke="#1D9E75" stroke-width="1.3" stroke-linecap="round"/></svg>
+      </div>
+      <h3>NABH and JCI audit trail</h3>
+      <p>Source-mapping appendix linking every module competency to MoHFW, INC, WHO, or AIIMS standard. Cohort completion summary with gate pass rates and remediation data.</p>
+    </div>
+    <div class="wr-output-card">
+      <div class="wr-output-icon">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M8 3v10" stroke="#1D9E75" stroke-width="1.3" stroke-linecap="round"/></svg>
+      </div>
+      <h3>No curriculum development required</h3>
+      <p>Complete program architecture, competency checklists, SDL workbooks, and assessment instruments are provided. Your training department deploys directly from the program package.</p>
+    </div>
+  </div>
+</div>
+
+<div class="wr-divider"></div>
+
+<!-- PILOT / TALLY FORM -->
+<div class="wr-pilot" id="pilot">
+  <div class="wr-pilot-inner">
+    <div class="wr-section-label" style="margin-bottom:0.5rem;">Pilot program</div>
+    <h2>Request a pilot conversation</h2>
+    <p>We are working with a small number of Indian private hospital groups to run the first deployment cohorts. If you are responsible for nurse training, induction, or clinical education at a hospital group, fill in the form below and we will follow up within 2 working days.</p>
+    <!-- TALLY EMBED: replace YOUR_TALLY_FORM_ID with your actual Tally form ID -->
+    <iframe
+      class="wr-tally-embed"
+      src="https://tally.so/embed/YOUR_TALLY_FORM_ID?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1"
+      loading="lazy"
+      title="WardReady pilot conversation request">
+    </iframe>
+  </div>
+</div>
+
+<!-- ACCREDITATION STRIP -->
+<div class="wr-accred">
+  <div class="wr-accred-badge">INC CNE accredited pathway</div>
+  <div class="wr-accred-badge">MoHFW Induction Framework aligned</div>
+  <div class="wr-accred-badge">NABH audit-ready documentation</div>
+  <div class="wr-accred-badge">WHO clinical standards adapted for India</div>
+</div>
+
+<!-- FOOTER -->
+<footer class="wr-footer">
+  <div class="wr-footer-left">WardReady — Clinical Practice Bridging Program for GNP-Qualified Nurses</div>
+  <div class="wr-footer-right">wardready.in</div>
+</footer>
+
+<!-- Tally resize script -->
+<script>
+  var d=document,w="https://tally.so/widgets/embed.js",v=function(){"undefined"!=typeof Tally?Tally.loadEmbeds():d.querySelectorAll("iframe[data-tally-src]:not([src])").forEach((function(e){e.src=e.dataset.tallySrc}))};if("undefined"!=typeof Tally)v();else if(d.querySelector('script[src="'+w+'"]')==null){var s=d.createElement("script");s.src=w,s.onload=v,s.onerror=v,d.body.appendChild(s);}
+</script>
+
+</body>
+</html>
